@@ -9,10 +9,14 @@ module Configuration
 		url = args[0]
 		@@currentSite = url
 		$driver = Selenium::WebDriver.for :firefox
-		$driver.manage.timeouts.implicit_wait = 30
+		$wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+		$wait.until { !$driver.title.downcase.nil? }
 		$driver.navigate.to @@currentSite		#start browser and specific url
 	end
 
+	def openUrlInExistingWindow(url)
+		$driver.navigate.to url
+	end
 	def closeUrl
 		$driver.quit							#close browser and website
 	end
