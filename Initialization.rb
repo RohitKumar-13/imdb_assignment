@@ -9,15 +9,9 @@ module Configuration
 		url = args[0]
 		@@currentSite = url
 		$driver = Selenium::WebDriver.for :firefox
-		$driver.manage.timeouts.page_load = 30
+		$wait = Selenium::WebDriver::Wait.new(:timeout => 10)
+		$wait.until { !$driver.title.downcase.nil? }
 		$driver.navigate.to @@currentSite		#start browser and specific url
-	end
-	def openTempUrl(*args)
-		url = args[0]
-		@@currentSite = url
-		$tempdriver = Selenium::WebDriver.for :firefox
-		$tempdriver.manage.timeouts.page_load = 30
-		$tempdriver.navigate.to @@currentSite		#start browser and specific url
 	end
 
 	def openUrlInExistingWindow(url)
@@ -25,9 +19,5 @@ module Configuration
 	end
 	def closeUrl
 		$driver.quit							#close browser and website
-	end
-
-	def closeTempUrl
-		$tempdriver.quit							#close browser and website
 	end
 end
