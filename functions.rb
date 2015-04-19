@@ -1,7 +1,9 @@
 require 'rubygems'
 require 'selenium-webdriver'
+require './Initialization.rb'
 
 module Functions
+	include Configuration
 	def getTitleLinkByClass(className)
 		script = "
 			function titleLink(title, url){
